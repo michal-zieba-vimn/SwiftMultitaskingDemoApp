@@ -64,13 +64,13 @@ import Combine
 
                 // comfortState.comfortLevel = blockingAirQualitySensor.getAirQualityStatusBlocking()
 
-                /*
+
                 closureAirQualitySensor.getAirQualityStatusClosureSerial { comfortLevelResult in
                     DispatchQueue.main.async {
                         comfortState.comfortLevel = comfortLevelResult
                     }
                 }
-*/
+
 
 /*
                 closureAirQualitySensor.getAirQualityStatusClosureParallel { comfortLevelResult in
@@ -82,16 +82,16 @@ import Combine
 
 
 /*
-                 Task {
+                 Task { @MainActor in
                      comfortState.comfortLevel = await asyncAirQualitySensor.getAirQualityStatusAsyncSerial()
                  }
+
 */
-
-
+/*
                 Task { @MainActor in
                     comfortState.comfortLevel = await asyncAirQualitySensor.getAirQualityStatusAsyncParallel()
                 }
-
+*/
             })
         }
     }

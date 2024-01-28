@@ -7,53 +7,25 @@
 
 import Foundation
 
-actor ClosureAirQualityStateActor {
-    var temperature: Double = 0.0
-    var humidity: Double = 0.0
-    var pm2_5: Double = 0.0
-
-    func setTemperature(_ temperature: Double) {
-        self.temperature = temperature
-    }
-
-    func setHumidity(_ humidity: Double) {
-        self.humidity = humidity
-    }
-
-    func setPM2_5(_ pm2_5: Double) {
-        self.pm2_5 = pm2_5
-    }
-}
 
 final class ClosureAirQualitySensor: Sendable {
 
-    private var currentTemperatureReading = Constants.Temperature.initialTemperature
-    private var currentHumidityReading = Constants.Humidity.initialHumidity
-    private var currentPM2_5Reading = Constants.PM2_5.initialPM2_5
-
     private let readingsGenerator: ReadingsGenerating
-    private let airQualityStateActor = ClosureAirQualityStateActor()
 
     init(readingsGenerator: ReadingsGenerating = ReadingsGenerator()) {
         self.readingsGenerator = readingsGenerator
     }
 
     private func getTemperatureReading(completion: @escaping (Double) -> Void) {
-        currentTemperatureReading = readingsGenerator.generateRandomTemperatureReading(currentTemperature: currentTemperatureReading)
-
-        completion(currentTemperatureReading)
+        completion(readingsGenerator.generateRandomTemperatureReading())
     }
 
     private func getHumidityReading(completion: @escaping (Double) -> Void) {
-        currentHumidityReading =         readingsGenerator.generateRandomHumidityReading(currentHumidity: currentHumidityReading)
-
-        completion(currentHumidityReading)
+        completion(readingsGenerator.generateRandomHumidityReading())
     }
 
     private func getPM2_5Reading(completion: @escaping (Double) -> Void) {
-        currentPM2_5Reading =         readingsGenerator.generateRandomPM2_5Reading(currentPM2_5: currentPM2_5Reading)
-
-        completion(currentPM2_5Reading)
+        completion(readingsGenerator.generateRandomPM2_5Reading())
     }
 
     func getAirQualityStatusClosureParallel(completion: @escaping (ComfortLevel) -> Void) {
@@ -94,7 +66,7 @@ final class ClosureAirQualitySensor: Sendable {
         }
     }
 
-    func getAirQualityStatusClosureSerial(completion: @escaping (ComfortLevel) -> Void) {
+    func getAirQualityStatusClosureSerial(completion: @escaping @Sendable (ComfortLevel) -> Void) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             self?.getTemperatureReading { temperatureReading in
                 self?.getHumidityReading { humidityReading in

@@ -7,11 +7,7 @@
 
 import Foundation
 
-final class AirQualitySensor {
-
-    private var currentTemperatureReading = Constants.Temperature.initialTemperature
-    private var currentHumidityReading = Constants.Humidity.initialHumidity
-    private var currentPM2_5Reading = Constants.PM2_5.initialPM2_5
+final class AirQualitySensor: Sendable {
 
     private let readingsGenerator: ReadingsGenerating
 
@@ -20,21 +16,15 @@ final class AirQualitySensor {
     }
 
     private func getTemperatureReading() -> Double {
-        currentTemperatureReading = readingsGenerator.generateRandomTemperatureReading(currentTemperature: currentTemperatureReading)
-
-        return currentTemperatureReading
+        readingsGenerator.generateRandomTemperatureReading()
     }
 
     private func getHumidityReading() -> Double {
-        currentHumidityReading =         readingsGenerator.generateRandomHumidityReading(currentHumidity: currentHumidityReading)
-
-        return currentHumidityReading
+        readingsGenerator.generateRandomHumidityReading()
     }
 
     private func getPM2_5Reading() -> Double {
-        currentPM2_5Reading =         readingsGenerator.generateRandomPM2_5Reading(currentPM2_5: currentPM2_5Reading)
-
-        return currentPM2_5Reading
+        readingsGenerator.generateRandomPM2_5Reading()
     }
 
     func getAirQualityStatusBlocking() -> ComfortLevel {
