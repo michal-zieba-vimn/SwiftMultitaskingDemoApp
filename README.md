@@ -17,17 +17,25 @@ While having animated emoji as a main part of UI allowed me to visualize whether
 
 Additionally I have added basic unit tests for each Sensor variant to see how difficult is to test these different styles of code.
 
+## Main Classes Overview / Explanation
+
+### ReadingsGenerator
+
+### Sensor implementations
+
+### ComfortLevel
+
+### ContentView
+
 ## Swift Concurrency in Swift 6
 
-# Main Classes Overview / Explanation
+## "Blocking" implementation
 
-## ReadingsGenerator
+## Closure implementation
 
-## Sensor implementations
+## Async/Await / Swift Concurrency implementation
 
-## ComfortLevel
 
-## ContentView
 
 
 
